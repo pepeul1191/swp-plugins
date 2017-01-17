@@ -1,0 +1,30 @@
+{
+  "name": "swp-plugins",
+  "homepage": "https://github.com/pepeul1191/swp-plugins",
+  "authors": [
+    "Pepe Valdivia <jvaldivia@softweb.pe>"
+  ],
+  "description": "Javascript plugins by Software Web Perú",
+  "main": "",
+  "keywords": [
+    "mootools",
+    "jquery"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+      "jquery": "^2.2.4",
+      "requirejs": "^2.3.2",
+      "underscore": "^1.8.3",
+      "angular": "1.4.7",
+      "angular-route": "1.4.7",
+      "angular-resource": "1.4.7"
+  }
+}
