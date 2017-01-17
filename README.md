@@ -2,4 +2,4 @@
 
 ---
 
-	$ bower install --save dashboard-redmine-style
+	   $ bower install --save swp-plugins
