@@ -36,7 +36,7 @@ var Validacion = new Class({
                   rpta = false;
               }else{
                   //console.log(data["mensaje"]);
-                  if (data["mensaje"]){
+                  if (data["mensaje"] == false){
                     $(input_id).addClass("input-text-error");
                     $(input_id).val("");
                     $(input_id).attr("placeholder", mensaje_error);
