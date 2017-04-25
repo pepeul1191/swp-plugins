@@ -24,5 +24,5 @@ tfoot>tr>td{padding-top: 5px;}
 table.list td { text-align: left; padding-left: 10px;}
 table.list th { text-align: left; padding-left: 10px;}
 /*botones*/
-.boton-tabla{color: #343434 !important;background-color: #E9E9E9 !important;border-color: #cccccc !important; font-size: 12px; border-radius: 0px; padding:5px;}
-.boton-tabla:hover{color: #343434 !important; background-color: #cccccc !important;border-color: #cccccc !important; font-size: 12px; border-radius: 0px; padding:5px;}
+.boton-tabla{color: #FFFFFF !important;background-color: #72c02c !important;border-color: #72c02c !important; font-size: 12px; border-radius: 0px; padding:5px;}
+.boton-tabla:hover{color: #FFFFFF !important; background-color: #5fb611 !important;border-color: #5fb611 !important; font-size: 12px; border-radius: 0px; padding:5px;}
