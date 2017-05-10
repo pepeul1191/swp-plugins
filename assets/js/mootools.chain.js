@@ -14,11 +14,11 @@ var AgregarFila = new Class({
         //implementación de IChainOperacion
          this.siguiente_instancia = instancia;
     },
-    SiguienteEslabon: function(operacion, thisDOM, objeto) {
+    SiguienteEslabon: function(operacion, thisDOM, objeto, event) {
         //implementación de IChainOperacion
-        this.siguiente_instancia.EjecutarOperacion(operacion, thisDOM, objeto);
+        this.siguiente_instancia.EjecutarOperacion(operacion, thisDOM, objeto, event);
     }, 
-    EjecutarOperacion: function(operacion, thisDOM, objeto) {
+    EjecutarOperacion: function(operacion, thisDOM, objeto, event) {
         //implementación de IChainOperacion
         if(operacion == "AgregarFila"){
             //console.log("Debería agregar una fila"); console.log(objeto);
@@ -108,7 +108,7 @@ var AgregarFila = new Class({
             $(objeto.id_dom + " tbody").append(nueva_fila);
         }else{
            try {
-              this.SiguienteEslabon(operacion, thisDOM, objeto);
+              this.SiguienteEslabon(operacion, thisDOM, objeto, event);
            }catch(error){
               console.log("Operación no implementada");
            }
@@ -122,11 +122,11 @@ var QuitarFila = new Class({
         //implementación de IChainOperacion
         this.siguiente_instancia = instancia;
     },
-    SiguienteEslabon: function(operacion, thisDOM, objeto) {
+    SiguienteEslabon: function(operacion, thisDOM, objeto, event) {
         //implementación de IChainOperacion
-        this.siguiente_instancia.EjecutarOperacion(operacion, thisDOM, objeto);
+        this.siguiente_instancia.EjecutarOperacion(operacion, thisDOM, objeto, event);
     }, 
-    EjecutarOperacion: function(operacion, thisDOM, objeto) {
+    EjecutarOperacion: function(operacion, thisDOM, objeto, event) {
         //implementación de IChainOperacion
         if(operacion == "QuitarFila"){
             //console.log("Debería quitar una fila");
@@ -139,7 +139,7 @@ var QuitarFila = new Class({
             console.log("paso!!!");
         }else{
              try {
-              this.SiguienteEslabon(operacion, thisDOM, objeto);
+              this.SiguienteEslabon(operacion, thisDOM, objeto, event);
            }catch(error){
               console.log("Operación no implementada");
            }
@@ -153,17 +153,17 @@ var EditarFila = new Class({
         //implementación de IChainOperacion
         this.siguiente_instancia = instancia;
     },
-    SiguienteEslabon: function(operacion, thisDOM, objeto) {
+    SiguienteEslabon: function(operacion, thisDOM, objeto, event) {
         //implementación de IChainOperacion
-        this.siguiente_instancia.EjecutarOperacion(operacion, thisDOM, objeto);
+        this.siguiente_instancia.EjecutarOperacion(operacion, thisDOM, objeto, event);
     }, 
-    EjecutarOperacion: function(operacion, thisDOM, objeto) {
+    EjecutarOperacion: function(operacion, thisDOM, objeto, event) {
         //implementación de IChainOperacion
         if(operacion == "EditarFila"){
             console.log("Debería editar una fila");
         }else{
              try {
-              this.SiguienteEslabon(operacion, thisDOM, objeto);
+              this.SiguienteEslabon(operacion, thisDOM, objeto, event);
            }catch(error){
               console.log("Operación no implementada");
            }
@@ -177,11 +177,11 @@ var AccionURL = new Class({
         //implementación de IChainOperacion
         this.siguiente_instancia = instancia;
     },
-    SiguienteEslabon: function(operacion, thisDOM, objeto) {
+    SiguienteEslabon: function(operacion, thisDOM, objeto, event) {
         //implementación de IChainOperacion
-        this.siguiente_instancia.EjecutarOperacion(operacion, thisDOM, objeto);
+        this.siguiente_instancia.EjecutarOperacion(operacion, thisDOM, objeto, event);
     }, 
-    EjecutarOperacion: function(operacion, thisDOM, objeto) {
+    EjecutarOperacion: function(operacion, thisDOM, objeto, event) {
         //implementación de IChainOperacion
         if(operacion == "AccionURL"){
             //console.log("Debería quitar una fila");
@@ -194,7 +194,7 @@ var AccionURL = new Class({
 
         }else{
              try {
-              this.SiguienteEslabon(operacion, thisDOM, objeto);
+              this.SiguienteEslabon(operacion, thisDOM, objeto, event);
            }catch(error){
               console.log("Operación no implementada");
            }
@@ -208,11 +208,11 @@ var AccionURL = new Class({
         //implementación de IChainOperacion
         this.siguiente_instancia = instancia;
     },
-    SiguienteEslabon: function(operacion, thisDOM, objeto) {
+    SiguienteEslabon: function(operacion, thisDOM, objeto, event) {
         //implementación de IChainOperacion
-        this.siguiente_instancia.EjecutarOperacion(operacion, thisDOM, objeto);
+        this.siguiente_instancia.EjecutarOperacion(operacion, thisDOM, objeto, event);
     }, 
-    EjecutarOperacion: function(operacion, thisDOM, objeto) {
+    EjecutarOperacion: function(operacion, thisDOM, objeto, event) {
         //implementación de IChainOperacion
         if(operacion == "IrURL"){
             //console.log("Debería ir a una url");
@@ -223,7 +223,7 @@ var AccionURL = new Class({
 
         }else{
              try {
-              this.SiguienteEslabon(operacion, thisDOM, objeto);
+              this.SiguienteEslabon(operacion, thisDOM, objeto, event);
            }catch(error){
               console.log("Operación no implementada");
            }
@@ -237,11 +237,11 @@ var EditarInputText = new Class({
         //implementación de IChainOperacion
         this.siguiente_instancia = instancia;
     },
-    SiguienteEslabon: function(operacion, thisDOM, objeto) {
+    SiguienteEslabon: function(operacion, thisDOM, objeto, event) {
         //implementación de IChainOperacion
-        this.siguiente_instancia.EjecutarOperacion(operacion, thisDOM, objeto);
+        this.siguiente_instancia.EjecutarOperacion(operacion, thisDOM, objeto, event);
     }, 
-    EjecutarOperacion: function(operacion, thisDOM, objeto) {
+    EjecutarOperacion: function(operacion, thisDOM, objeto, event) {
         //implementación de IChainOperacion
         //console.log("EditarInputText");
         if(operacion == "EditarInputText"){
@@ -259,7 +259,7 @@ var EditarInputText = new Class({
            ObservadorConcreto.NotificarObservadores(objeto.observador, tipo_arreglo, id_fila);
         }else{
              try {
-              this.SiguienteEslabon(operacion, thisDOM, objeto);
+              this.SiguienteEslabon(operacion, thisDOM, objeto, event);
            }catch(error){
               console.log("Operación no implementada");
            }
@@ -273,11 +273,11 @@ var EditarInputText = new Class({
         //implementación de IChainOperacion
         this.siguiente_instancia = instancia;
     },
-    SiguienteEslabon: function(operacion, thisDOM, objeto) {
+    SiguienteEslabon: function(operacion, thisDOM, objeto, event) {
         //implementación de IChainOperacion
-        this.siguiente_instancia.EjecutarOperacion(operacion, thisDOM, objeto);
+        this.siguiente_instancia.EjecutarOperacion(operacion, thisDOM, objeto, event);
     }, 
-    EjecutarOperacion: function(operacion, thisDOM, objeto) {
+    EjecutarOperacion: function(operacion, thisDOM, objeto, event) {
         //implementación de IChainOperacion
         if(operacion == "GuardarTabla"){
            //GENERAR UN OBJETO A ENVIAR POR AJAX QUE TENGA LOS OBJETOS EDITADOS; NUEVOS y ELIMINADOS EN FUNCION A "array_json_td"
@@ -397,11 +397,11 @@ var EditarInputText = new Class({
            //objeto_observado.arreglo_editados = [];
            //objeto_observado.arreglo_nuevos = [];
            //objeto_observado.arreglo_eliminados = [];
-
+           event.preventDefault();
            //FIN
         }else{
              try {
-              this.SiguienteEslabon(operacion, thisDOM, objeto);
+              this.SiguienteEslabon(operacion, thisDOM, objeto, event);
            }catch(error){
               console.log("Operación no implementada");
            }
@@ -477,11 +477,11 @@ var EditarInputText = new Class({
         //implementación de IChainOperacion
         this.siguiente_instancia = instancia;
     },
-    SiguienteEslabon: function(operacion, thisDOM, objeto) {
+    SiguienteEslabon: function(operacion, thisDOM, objeto, event) {
         //implementación de IChainOperacion
-        this.siguiente_instancia.EjecutarOperacion(operacion, thisDOM, objeto);
+        this.siguiente_instancia.EjecutarOperacion(operacion, thisDOM, objeto, event);
     }, 
-    EjecutarOperacion: function(operacion, thisDOM, objeto) {
+    EjecutarOperacion: function(operacion, thisDOM, objeto, event) {
         //implementación de IChainOperacion
         //console.log("EditarInputCheck");
         if(operacion == "EditarInputCheck"){
@@ -499,7 +499,7 @@ var EditarInputText = new Class({
            ObservadorConcreto.NotificarObservadores(objeto.observador, tipo_arreglo, id_fila);
         }else{
              try {
-              this.SiguienteEslabon(operacion, thisDOM, objeto);
+              this.SiguienteEslabon(operacion, thisDOM, objeto, event);
            }catch(error){
               console.log("Operación no implementada");
            }
@@ -513,11 +513,11 @@ var EditarInputText = new Class({
         //implementación de IChainOperacion
         this.siguiente_instancia = instancia;
     },
-    SiguienteEslabon: function(operacion, thisDOM, objeto) {
+    SiguienteEslabon: function(operacion, thisDOM, objeto, event) {
         //implementación de IChainOperacion
-        this.siguiente_instancia.EjecutarOperacion(operacion, thisDOM, objeto);
+        this.siguiente_instancia.EjecutarOperacion(operacion, thisDOM, objeto, event);
     }, 
-    EjecutarOperacion: function(operacion, thisDOM, objeto) {
+    EjecutarOperacion: function(operacion, thisDOM, objeto, event) {
         //implementación de IChainOperacion
         console.log("SeleccionarOption");
         if(operacion == "SeleccionarOption"){
@@ -535,7 +535,7 @@ var EditarInputText = new Class({
            ObservadorConcreto.NotificarObservadores(objeto.observador, tipo_arreglo, id_fila);
         }else{
              try {
-              this.SiguienteEslabon(operacion, thisDOM, objeto);
+              this.SiguienteEslabon(operacion, thisDOM, objeto, event);
            }catch(error){
               console.log("Operación no implementada");
            }
@@ -543,7 +543,7 @@ var EditarInputText = new Class({
     }
 });
 
- $(document).on("click", ".mootools", function() {
+ $(document).on("click", ".mootools", function(event) {
     var objeto = eval(this.get("objeto"));
     var eslabon_1 = new AgregarFila();
     var eslabon_2 = new GuardarTabla();
@@ -558,19 +558,20 @@ var EditarInputText = new Class({
 
     var operacion = this.get("operacion"); console.log(operacion);
 
-    eslabon_1.EjecutarOperacion(operacion, $(this), objeto);
+    eslabon_1.EjecutarOperacion(operacion, $(this), objeto, event);
+
 });
 
 $(document).on("keydown", ".mootools", function(event) {
   var objeto = eval(this.get("objeto"));
   var eslabon_1 = new EditarInputText();
   var operacion = this.get("operacion"); //console.log(operacion);
-    eslabon_1.EjecutarOperacion(operacion, $(event.currentTarget), objeto);
+    eslabon_1.EjecutarOperacion(operacion, $(event.currentTarget), objeto, event);
 });
 
 $(document).on("change", ".mootools", function(event) {
   var objeto = eval(this.get("objeto"));
   var eslabon_1 = new SeleccionarOption();
   var operacion = this.get("operacion"); //console.log(operacion);
-    eslabon_1.EjecutarOperacion(operacion, $(event.currentTarget), objeto);
+    eslabon_1.EjecutarOperacion(operacion, $(event.currentTarget), objeto, event);
 });
