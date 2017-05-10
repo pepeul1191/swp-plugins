@@ -20,7 +20,7 @@
     "tests"
   ],
   "dependencies": {
-      "jquery",
+      "jquery": "^3.2.1",
       "requirejs": "^2.2.6",
       "underscore": "^1.8.3",
       "angular": "1.4.7",
