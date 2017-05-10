@@ -50,8 +50,7 @@ var Checkbox = new Class({
 	Crear: function(estilos, valor, objeto){
 		if(typeof valor === 'undefined'){valor = ' ';}else if(valor == true || valor == "true"){valor = "checked"}else if(valor == false || valor == "false"){valor = ""}
         if(typeof estilos === 'undefined'){estilos= ' ';}
-        var name_for = "cb_" + _.random(0, 1000);
-        this.html = "<td style='" + estilos + "' title='checkbox'><input class='mootools' type='checkbox' id='" + name_for + "' operacion='EditarInputCheck' name='" + name_for + "' objeto='" + objeto + "'" + valor + "/><label for='" + name_for + "'><span></span></label></td>";
+        this.html = "<td style='" + estilos + "' title='checkbox'><input class='mootools' type='checkbox' operacion='EditarInputCheck' objeto='" + objeto + "'" + valor + "/></td>";
 	},
 	GetHtml: function(){
 		return this.html;

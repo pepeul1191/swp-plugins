@@ -361,7 +361,7 @@ var EditarInputText = new Class({
                
                
                var rpta_mensaje = JSON.parse(ajax_tabla.GetRespuesta());
-               console.log(rpta_mensaje);
+               console.log(rpta_mensaje);return false;
                if(rpta_mensaje.tipo_mensaje == "success"){
                    $(objeto.id_label_mensaje).html(rpta_mensaje.mensaje[0]);
                    $(objeto.id_label_mensaje).removeClass("oculto");
