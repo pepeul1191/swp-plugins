@@ -8,11 +8,12 @@ IAutocompletePlan = new Interface( "IAutocompletePlan", {
     SetDestinoIdSugerencia: function(id_sugerencia_id) {},
     SetDestinoValorSugerencia: function(id_sugerencia_valor) {},
     SetIndices: function(llave, valor) {},
+    SetNombreObjeto: function(nombre) {},
     SetFuncionAdicional: function(funcion_adicional){}
 });
 
 var Autocomplete = new Class({
-    Interfaces: [ IAutocompletePlan ], 
+    Interfaces: [ IAutocompletePlan ],
     SetUrl: function(url) {
         this.url = url;
     },
@@ -29,6 +30,9 @@ var Autocomplete = new Class({
         this.llave = llave;
         this.valor = valor;
     },
+    SetNombreObjeto: function(nombre) {
+        this.nombre = nombre;
+    },
     SetFuncionAdicional: function(funcion_adicional){
         this.funcion_adicional = funcion_adicional;
         this.datos_seleccion = null;
@@ -44,7 +48,7 @@ var EscribirAutoComplete = new Class({
     SiguienteEslabon: function(operacion, thisDOM, objeto) {
         //implementación de IChainOperacion
         this.siguiente_instancia.EjecutarOperacion(operacion, thisDOM, objeto);
-    }, 
+    },
     EjecutarOperacion: function(operacion, thisDOM, objeto) {
         //implementación de IChainOperacion
         if(operacion == "EscribirAutoComplete"){
@@ -67,13 +71,13 @@ var EscribirAutoComplete = new Class({
                              }else{
                                   var id = data[i][objeto.llave];
                              }
-		          	var temp = "<li><label class='oculto'>" + id + "</label><label class='mootools' operacion='clickSugerenciaAutocomplete' objeto='" + objeto.nombre_objeto + "'>" + data[i][objeto.valor] + "</label></li>";
+		          	var temp = "<li><label class='oculto'>" + id + "</label><label class='mootools' operacion='clickSugerenciaAutocomplete' objeto='" + objeto.nombre + "'>" + data[i][objeto.valor] + "</label></li>";
 		          	lis = lis + temp;
 		          }
 		          $(objeto.id_ul_sugerencia).removeClass("oculto");
 		          $(objeto.id_ul_sugerencia).append(lis);
 		          //console.log(temp);
-		          return false;                                          
+		          return false;
 		       }
 		    });
         }else{
@@ -95,13 +99,13 @@ var clickSugerenciaAutocomplete = new Class({
     SiguienteEslabon: function(operacion, thisDOM, objeto) {
         //implementación de IChainOperacion
         this.siguiente_instancia.EjecutarOperacion(operacion, thisDOM, objeto);
-    }, 
+    },
     EjecutarOperacion: function(operacion, thisDOM, objeto) {
         //implementación de IChainOperacion
         if(operacion == "clickSugerenciaAutocomplete"){
-        	var objeto = eval( thisDOM.parent().parent().parent().children(0)[0].get("objeto") );
+          var objeto = eval(thisDOM.attr("objeto"));
            var id = $(thisDOM.parent().children()[0]).html();
-		   $(objeto.id_sugerencia_id).html(id); 
+		   $(objeto.id_sugerencia_id).html(id);
 		   $(objeto.id_sugerencia_valor).val( thisDOM.html() );
 		   $(objeto.id_ul_sugerencia).empty();
 		   $(objeto.id_ul_sugerencia).addClass("oculto");
@@ -127,11 +131,11 @@ var clickSugerenciaAutocomplete = new Class({
     }
 });
 
- $(document).on("click", ".mootools", function() {
+ $(document).on("click", ".mootools", function(event) {
     var objeto = eval(this.get("objeto"));
     var eslabon_1 = new clickSugerenciaAutocomplete();
     var operacion = this.get("operacion"); //console.log(operacion);
-    eslabon_1.EjecutarOperacion(operacion, $(this), objeto);
+    eslabon_1.EjecutarOperacion(operacion, $(event.currentTarget), objeto);
 });
 
 $(document).on("keyup", ".mootools", function(event) {
