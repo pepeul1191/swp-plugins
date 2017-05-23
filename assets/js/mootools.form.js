@@ -110,7 +110,7 @@ var BotonesFila = new Class({
 	Interfaces: [ IForm ],
 	Crear: function(array_json_btn_td, estilos, objeto){
 		var botones_html = "<td title = 'botonesTd' style='"+ array_json_btn_td[0].estilos + "'>" ;
-		
+
 		for( var i = 0; i < array_json_btn_td.length; i++){
 			//console.log(array_json_btn_td[i]);
 			var boton = "<b operacion = '" + array_json_btn_td[i].operacion + "' objeto='" + objeto +"' class='mootools'><a title = '" + array_json_btn_td[i].alt + "' class = 'boton-tabla-td ' href = '" + array_json_btn_td[i].url + "' ><i class='" + array_json_btn_td[i].clase + "'></i></a></b>";
@@ -118,6 +118,25 @@ var BotonesFila = new Class({
 		}
 
 		this.html = botones_html + "</td>";
+	},
+	GetHtml: function(){
+		return this.html;
+	}
+});
+
+var TablaAutocomplete = new Class({
+	Interfaces: [ IForm ],
+	//Button(array_json_btn[i].label, array_json_btn[i].icono, array_json_btn[i].operacion);
+	Crear: function(estilos,edicion,datos, objeto, randito_id){
+		 var rpta = "<td style='" + estilos + "' title='autocomplete'>";
+
+		if (typeof datos === 'undefined'){
+			rpta = rpta + "<label class='oculto' id='id_sugerencia_"+ randito_id + "'></label><input style='" + estilos + "' type='text' class='mootools' id='valor_sugerencia_" + randito_id  + "' placeholder='' operacion='EscribirAutoCompleteTabla' objeto='" + objeto + "' objeto_autocomplete='objeto_" + randito_id + "'><ul id='ul_sugerencia_" + randito_id + "' class='oculto sugerencia-contenedor'></ul>";
+		}else{
+			rpta = rpta + "<label class='oculto' id='id_sugerencia_"+ randito_id + "'>" + datos.llave + "</label><input style='" + estilos + "' type='text' class='mootools' id='valor_sugerencia_" + randito_id  + "' placeholder='' operacion='EscribirAutoCompleteTabla' objeto='" + objeto + "' objeto_autocomplete='objeto_" + randito_id + "' value='" + datos.valor + "'><ul id='ul_sugerencia_" + randito_id + "' class='oculto sugerencia-contenedor'></ul>";
+		}
+
+		this.html = rpta + "</td>";
 	},
 	GetHtml: function(){
 		return this.html;

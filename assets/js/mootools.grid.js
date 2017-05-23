@@ -10,13 +10,14 @@ IGridPlan = new Interface( "IGridPlan", {
     SetTableFooter: function(array_json_btn, tamanio_pagina) {},
     SetLabelMensaje: function(id_label_mensaje){},
     SetURLGuardar: function(url) {} ,
-    SetURLNuevo: function(url) {} 
+    SetURLNuevo: function(url) {}
 });
 
 var Grid = new Class({
     Interfaces: [ IGridPlan ],
     html_gird : "",
     id_label_mensaje : "#txtMensajeRpta",
+    handler_object : new Object(),
     SetTableId: function(id_tabla) {
         this.id_dom = "#" + id_tabla;
         this.observador = new Observador(id_tabla);
@@ -53,7 +54,7 @@ var Grid = new Class({
                     array_rpta.push(JSON.parse(dao_rpta[i]));
                 }catch(err) {
                     if (err instanceof SyntaxError) {
-                        array_rpta.push(dao_rpta[i]);       
+                        array_rpta.push(dao_rpta[i]);
                      } else {
                         throw err; // let others bubble up
                      }
@@ -64,10 +65,10 @@ var Grid = new Class({
         }
 
         for( var i = 0; i < dao_rpta.length; i++){
-            this.html_gird = this.html_gird + "<tr>"; 
+            this.html_gird = this.html_gird + "<tr>";
            for( var k = 0; k < array_json_td.length; k++){
                 var index_td = array_json_td[k].index;
-                var tipo_form = array_json_td[k].tipo; 
+                var tipo_form = array_json_td[k].tipo;
                 //console.log(array_json_td[k].tipo); console.log(index_td);
                 switch(tipo_form) {
                     case "text":
@@ -76,7 +77,7 @@ var Grid = new Class({
                         var estilos = array_json_td[k].estilos;
                         var edicion = array_json_td[k].edicion;
                         var valor = dao_rpta[i][index_td];
-                        
+
                         input_text.Crear(estilos,edicion,valor, this.objeto); //console.log(input_text.GetHtml());
                         this.html_gird = this.html_gird + input_text.GetHtml();
                         break;
@@ -103,7 +104,7 @@ var Grid = new Class({
                         var label_id_mongo = new LabelId();
                         var estilos = array_json_td[k].estilos;
                         //console.log(dao_rpta[i][index_td]);
-                        var valor = dao_rpta[i][index_td]; 
+                        var valor = dao_rpta[i][index_td];
                         valor = valor["$oid"];
                         //console.log(valor);
                         label_id_mongo.Crear(estilos, valor, index_td);//console.log(label.GetHtml());
@@ -112,23 +113,23 @@ var Grid = new Class({
                     case "botones":
                         var botones_fila = new BotonesFila();
                         var estilos = array_json_td[k].estilos;
-                        
+
                         botones_fila.Crear(array_json_btn_td, estilos, this.objeto); //console.log(botones_fila.GetHtml());
                         this.html_gird = this.html_gird + botones_fila.GetHtml();
                         break;
                     case "checkbox":
                         var checkbox = new Checkbox();
                         var estilos = array_json_td[k].estilos;
-                        var valor = dao_rpta[i][index_td]; 
-                        
+                        var valor = dao_rpta[i][index_td];
+
                         checkbox.Crear(estilos, valor, this.objeto); //console.log(botones_fila.GetHtml());
                         this.html_gird = this.html_gird + checkbox.GetHtml();
                         break;
                     case "checkbox-read-only":
                         var checkbox_read_only = new CheckboxReadOnly();
                         var estilos = array_json_td[k].estilos;
-                        var valor = dao_rpta[i][index_td]; 
-                        
+                        var valor = dao_rpta[i][index_td];
+
                         checkbox_read_only.Crear(estilos, valor, this.objeto); //console.log(botones_fila.GetHtml());
                         this.html_gird = this.html_gird + checkbox_read_only.GetHtml();
                         break;
@@ -136,22 +137,46 @@ var Grid = new Class({
                         var select = new Select();
                         var estilos = array_json_td[k].estilos;
                         var options = JSON.parse(array_json_td[k].options.ajax_rpta_data);
-                        var valor = dao_rpta[i][index_td]; 
-                        
+                        var valor = dao_rpta[i][index_td];
+
                         select.Crear(estilos, options, valor, this.objeto); //console.log(botones_fila.GetHtml());
                         this.html_gird = this.html_gird + select.GetHtml();
                         break;
+                    case "autocomplete":
+                         //console.log("tenemos un autocomplete");
+                         var randito_id = "autocomplete_" + Math.floor(Math.random() * 2000) + 1;
+                        this.handler_object["objeto_" + randito_id] = new Autocomplete();
+                        this.handler_object["objeto_" + randito_id].SetUrl(array_json_td[k].url);
+                        this.handler_object["objeto_" + randito_id].SetUlSugerencia("ul_sugerencia_" + randito_id);
+                        this.handler_object["objeto_" + randito_id].SetDestinoIdSugerencia("id_sugerencia_" + randito_id);
+                        this.handler_object["objeto_" + randito_id].SetNombreObjeto(randito_id);
+                        this.handler_object["objeto_" + randito_id].SetDestinoValorSugerencia("valor_sugerencia_" + randito_id);
+                        this.handler_object["objeto_" + randito_id].SetIndices(array_json_td[k].llave, array_json_td[k].valor);
+                        this.handler_object["objeto_" + randito_id].SetFuncionAdicional(array_json_td[k].funcion_adicional);
+
+                         var input_autocomplete = new TablaAutocomplete();
+                         var datos =  {
+                            llave: dao_rpta[i][array_json_td[k].formato_carga.llave],
+                            valor: dao_rpta[i][array_json_td[k].formato_carga.valor]
+                        };
+
+                         var estilos = array_json_td[k].estilos;
+                         var edicion = array_json_td[k].edicion;
+
+                         input_autocomplete.Crear(estilos,edicion,datos, this.objeto, randito_id); //console.log(input_text.GetHtml());
+                         this.html_gird = this.html_gird + input_autocomplete.GetHtml();
+                         break;
                     default:
                         console.log("SetTableBody:'" + tipo_form + "' no tiene una implementación.");
-                }    
+                }
            }
-           this.html_gird = this.html_gird + "</tr>"; 
+           this.html_gird = this.html_gird + "</tr>";
         }
-        this.html_gird = this.html_gird + "</tbody>"; 
+        this.html_gird = this.html_gird + "</tbody>";
     },
     SetTableFooter: function(array_json_btn, tamanio_pagina) {
         this.html_gird = this.html_gird + "<tfoot><tr><td colspan='1000' style='text-align:right'>";
-        
+
         for( var i = 0; i < array_json_btn.length; i++){
             //tipo: "agrega_fila", operacion:"AgregarFila", icono: "fa fa-plus", label: "Agregar Registro"
             var boton = new Button();

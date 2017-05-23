@@ -2,14 +2,14 @@
 // version : 1.0
 // dependencias : mootools-core-min.js, mootools-min.js, underscore-min.js, jquery.min.js
 
- IChainOperacion = new Interface( "IChainOperacion", { 
+ IChainOperacion = new Interface( "IChainOperacion", {
     SetearSiguienteInstancia: function(instancia){},
-    SiguienteEslabon: function(operacion, obj_query_event, objeto) {}, 
+    SiguienteEslabon: function(operacion, obj_query_event, objeto) {},
     EjecutarOperacion: function(operacion, obj_query_event, objeto) {}
-}); 
+});
 
 var AgregarFila = new Class({
-    Interfaces: [ IChainOperacion ], 
+    Interfaces: [ IChainOperacion ],
     SetearSiguienteInstancia: function(instancia){
         //implementación de IChainOperacion
          this.siguiente_instancia = instancia;
@@ -17,7 +17,7 @@ var AgregarFila = new Class({
     SiguienteEslabon: function(operacion, thisDOM, objeto, event) {
         //implementación de IChainOperacion
         this.siguiente_instancia.EjecutarOperacion(operacion, thisDOM, objeto, event);
-    }, 
+    },
     EjecutarOperacion: function(operacion, thisDOM, objeto, event) {
         //implementación de IChainOperacion
         if(operacion == "AgregarFila"){
@@ -28,7 +28,7 @@ var AgregarFila = new Class({
 
             for( var k = 0; k < array_json_th.length; k++){
                  var index_td = array_json_td[k].index;
-                 var tipo_form = array_json_td[k].tipo; 
+                 var tipo_form = array_json_td[k].tipo;
                  //console.log(array_json_td[k].tipo); //console.log(index_td); //console.log(valor_ajax_dao);
                  switch(tipo_form) {
                      case "text":
@@ -73,7 +73,7 @@ var AgregarFila = new Class({
                          var label_id_mongo = new LabelId();
                          var estilos = array_json_td[k].estilos;
                          var titulo_th = array_json_th[k].titulo;
-                         
+
                          if(titulo_th == "id"){
                             valor = objeto.id_dom.substring(1) + "_"+ _.random(0, 1000);
                          }
@@ -84,7 +84,7 @@ var AgregarFila = new Class({
                      case "botones":
                          var botones_fila = new BotonesFila();
                          var estilos = array_json_td[k].estilos;
-                         
+
                          botones_fila.Crear(objeto.array_json_btn_td, estilos, this.objeto); //console.log(botones_fila.GetHtml());
                          nueva_fila = nueva_fila + botones_fila.GetHtml();
                          break;
@@ -92,25 +92,50 @@ var AgregarFila = new Class({
                          var select = new Select();
                          var estilos = array_json_td[k].estilos;
                          var options = JSON.parse(array_json_td[k].options.ajax_rpta_data);
-                         var valor = null; 
+                         var valor = null;
 
-                         select.Crear(estilos, options, valor, this.objeto); 
+                         select.Crear(estilos, options, valor, this.objeto);
                          nueva_fila = nueva_fila + select.GetHtml();
+                         break;
+                      case "autocomplete":
+                         //console.log("tenemos un autocomplete");
+                         var randito_id = "autocomplete_" + Math.floor(Math.random() * 2000) + 1;
+                        objeto.handler_object["objeto_" + randito_id] = new Autocomplete();
+                        objeto.handler_object["objeto_" + randito_id].SetUrl(array_json_td[k].url);
+                        objeto.handler_object["objeto_" + randito_id].SetUlSugerencia("ul_sugerencia_" + randito_id);
+                        objeto.handler_object["objeto_" + randito_id].SetDestinoIdSugerencia("id_sugerencia_" + randito_id);
+                        objeto.handler_object["objeto_" + randito_id].SetNombreObjeto(randito_id);
+                        objeto.handler_object["objeto_" + randito_id].SetDestinoValorSugerencia("valor_sugerencia_" + randito_id);
+                        objeto.handler_object["objeto_" + randito_id].SetIndices(array_json_td[k].llave, array_json_td[k].valor);
+                        objeto.handler_object["objeto_" + randito_id].SetFuncionAdicional(array_json_td[k].funcion_adicional);
+
+                         var input_autocomplete = new TablaAutocomplete();
+                         var datos =  {
+                            llave: "E",
+                            valor: ""
+                        };
+
+                         var estilos = array_json_td[k].estilos;
+                         var edicion = array_json_td[k].edicion;
+
+                         input_autocomplete.Crear(estilos,edicion,datos, objeto.objeto, randito_id); //console.log(input_text.GetHtml());
+                         nueva_fila = nueva_fila +  input_autocomplete.GetHtml();
                          break;
                      default:
                         console.log("SetTableBody:'" + tipo_form + "' no tiene una implementación.");
                         break;
-                 }    
+                 }
             }
 
             nueva_fila = nueva_fila + "</tr>";
             //console.log(nueva_fila);
             $(objeto.id_dom + " tbody").append(nueva_fila);
+            event.preventDefault();
         }else{
            try {
               this.SiguienteEslabon(operacion, thisDOM, objeto, event);
            }catch(error){
-              console.log("Operación no implementada");
+              //console.log("Operación no implementada");
            }
         }
     }
@@ -125,7 +150,7 @@ var QuitarFila = new Class({
     SiguienteEslabon: function(operacion, thisDOM, objeto, event) {
         //implementación de IChainOperacion
         this.siguiente_instancia.EjecutarOperacion(operacion, thisDOM, objeto, event);
-    }, 
+    },
     EjecutarOperacion: function(operacion, thisDOM, objeto, event) {
         //implementación de IChainOperacion
         if(operacion == "QuitarFila"){
@@ -141,7 +166,7 @@ var QuitarFila = new Class({
              try {
               this.SiguienteEslabon(operacion, thisDOM, objeto, event);
            }catch(error){
-              console.log("Operación no implementada");
+              //console.log("Operación no implementada");
            }
         }
     }
@@ -156,7 +181,7 @@ var EditarFila = new Class({
     SiguienteEslabon: function(operacion, thisDOM, objeto, event) {
         //implementación de IChainOperacion
         this.siguiente_instancia.EjecutarOperacion(operacion, thisDOM, objeto, event);
-    }, 
+    },
     EjecutarOperacion: function(operacion, thisDOM, objeto, event) {
         //implementación de IChainOperacion
         if(operacion == "EditarFila"){
@@ -165,7 +190,7 @@ var EditarFila = new Class({
              try {
               this.SiguienteEslabon(operacion, thisDOM, objeto, event);
            }catch(error){
-              console.log("Operación no implementada");
+              //console.log("Operación no implementada");
            }
         }
     }
@@ -180,7 +205,7 @@ var AccionURL = new Class({
     SiguienteEslabon: function(operacion, thisDOM, objeto, event) {
         //implementación de IChainOperacion
         this.siguiente_instancia.EjecutarOperacion(operacion, thisDOM, objeto, event);
-    }, 
+    },
     EjecutarOperacion: function(operacion, thisDOM, objeto, event) {
         //implementación de IChainOperacion
         if(operacion == "AccionURL"){
@@ -196,7 +221,7 @@ var AccionURL = new Class({
              try {
               this.SiguienteEslabon(operacion, thisDOM, objeto, event);
            }catch(error){
-              console.log("Operación no implementada");
+              //console.log("Operación no implementada");
            }
         }
     }
@@ -211,7 +236,7 @@ var AccionURL = new Class({
     SiguienteEslabon: function(operacion, thisDOM, objeto, event) {
         //implementación de IChainOperacion
         this.siguiente_instancia.EjecutarOperacion(operacion, thisDOM, objeto, event);
-    }, 
+    },
     EjecutarOperacion: function(operacion, thisDOM, objeto, event) {
         //implementación de IChainOperacion
         if(operacion == "IrURL"){
@@ -225,7 +250,7 @@ var AccionURL = new Class({
              try {
               this.SiguienteEslabon(operacion, thisDOM, objeto, event);
            }catch(error){
-              console.log("Operación no implementada");
+              //console.log("Operación no implementada");
            }
         }
     }
@@ -240,7 +265,7 @@ var EditarInputText = new Class({
     SiguienteEslabon: function(operacion, thisDOM, objeto, event) {
         //implementación de IChainOperacion
         this.siguiente_instancia.EjecutarOperacion(operacion, thisDOM, objeto, event);
-    }, 
+    },
     EjecutarOperacion: function(operacion, thisDOM, objeto, event) {
         //implementación de IChainOperacion
         //console.log("EditarInputText");
@@ -255,13 +280,13 @@ var EditarInputText = new Class({
                 //console.log("es una fila editada");
                 var tipo_arreglo = "editado";
             }
-           
+
            ObservadorConcreto.NotificarObservadores(objeto.observador, tipo_arreglo, id_fila);
         }else{
              try {
               this.SiguienteEslabon(operacion, thisDOM, objeto, event);
            }catch(error){
-              console.log("Operación no implementada");
+              //console.log("Operación no implementada");
            }
         }
     }
@@ -276,7 +301,7 @@ var EditarInputText = new Class({
     SiguienteEslabon: function(operacion, thisDOM, objeto, event) {
         //implementación de IChainOperacion
         this.siguiente_instancia.EjecutarOperacion(operacion, thisDOM, objeto, event);
-    }, 
+    },
     EjecutarOperacion: function(operacion, thisDOM, objeto, event) {
         //implementación de IChainOperacion
         if(operacion == "GuardarTabla"){
@@ -286,10 +311,10 @@ var EditarInputText = new Class({
            for( var k = 0 ; k < ObservadorConcreto.observador_array.length ; k++){
                if(ObservadorConcreto.observador_array[k].tabla_observada == tabla_actual){
                    objeto_observado = ObservadorConcreto.observador_array[k];
-               }  
+               }
            }
-           //console.log(objeto_observado); //return false; 
-           var arreglo_nuevos = [];            var arreglo_editados = [];           var arreglo_eliminados = []; 
+           //console.log(objeto_observado); //return false;
+           var arreglo_nuevos = [];            var arreglo_editados = [];           var arreglo_eliminados = [];
            for(var k = 0; k < $(objeto.id_dom).children("tbody").children().length; k++){
                var fila = $(objeto.id_dom).children("tbody").children()[k];
                for(var i = 0; i < $(fila).children().length; i++){
@@ -355,11 +380,11 @@ var EditarInputText = new Class({
                     };
                    var data = JSON.stringify(json_datos);
                    //console.log(data);
-                   
+
                    ajax_tabla.Constructor("POST", objeto.url_guardar, data, false);
                }
-               
-               
+
+
                var rpta_mensaje = JSON.parse(ajax_tabla.GetRespuesta());
                //console.log(rpta_mensaje);return false;
                if(rpta_mensaje.tipo_mensaje == "success"){
@@ -392,7 +417,7 @@ var EditarInputText = new Class({
                    $(objeto.id_label_mensaje).addClass("color-error");
                }
            }
-           
+
            //SI NO HAY ERROR EN EL AJAX, ENTONCES QUITO EL OBSERVADOR
            //objeto_observado.arreglo_editados = [];
            //objeto_observado.arreglo_nuevos = [];
@@ -403,7 +428,7 @@ var EditarInputText = new Class({
              try {
               this.SiguienteEslabon(operacion, thisDOM, objeto, event);
            }catch(error){
-              console.log("Operación no implementada");
+              //console.log("Operación no implementada");
            }
         }
     },
@@ -454,6 +479,14 @@ var EditarInputText = new Class({
                    objeto_nuevo[llave] = valor;
                   //console.log(llave + " : " + valor);
                    break;
+                case "autocomplete":
+                  //console.log(k + " tenemos un autocomplete");
+                   var llave = arreglo_indices[k];
+                  var valor = $(objeto_fila.children().children().eq(k)).html()
+                  objeto_nuevo[llave] = valor;
+                   //objeto_nuevo[llave] = valor;
+                  //console.log(llave + " : " + valor);
+                   break;
                case "botonesTd":
                    //No hace nada porque lo botones no cambian
                    //console.log(k + " tenemos un conjunto de botones");
@@ -464,7 +497,7 @@ var EditarInputText = new Class({
                    break;
                default:
                   console.log("GenerarObjetoJSON:'" + tipo_form + "' no tiene una implementación.");
-           } 
+           }
         }
         //console.log(objeto_nuevo);
         return objeto_nuevo;
@@ -480,7 +513,7 @@ var EditarInputText = new Class({
     SiguienteEslabon: function(operacion, thisDOM, objeto, event) {
         //implementación de IChainOperacion
         this.siguiente_instancia.EjecutarOperacion(operacion, thisDOM, objeto, event);
-    }, 
+    },
     EjecutarOperacion: function(operacion, thisDOM, objeto, event) {
         //implementación de IChainOperacion
         //console.log("EditarInputCheck");
@@ -495,13 +528,13 @@ var EditarInputText = new Class({
                 //console.log("es una fila eliminada");
                 var tipo_arreglo = "eliminado";
             }
-           
+
            ObservadorConcreto.NotificarObservadores(objeto.observador, tipo_arreglo, id_fila);
         }else{
              try {
               this.SiguienteEslabon(operacion, thisDOM, objeto, event);
            }catch(error){
-              console.log("Operación no implementada");
+              //console.log("Operación no implementada");
            }
         }
     }
@@ -516,7 +549,7 @@ var EditarInputText = new Class({
     SiguienteEslabon: function(operacion, thisDOM, objeto, event) {
         //implementación de IChainOperacion
         this.siguiente_instancia.EjecutarOperacion(operacion, thisDOM, objeto, event);
-    }, 
+    },
     EjecutarOperacion: function(operacion, thisDOM, objeto, event) {
         //implementación de IChainOperacion
         console.log("SeleccionarOption");
@@ -531,13 +564,13 @@ var EditarInputText = new Class({
                 console.log("es una fila editada");
                 var tipo_arreglo = "editado";
             }
-           
+
            ObservadorConcreto.NotificarObservadores(objeto.observador, tipo_arreglo, id_fila);
         }else{
              try {
               this.SiguienteEslabon(operacion, thisDOM, objeto, event);
            }catch(error){
-              console.log("Operación no implementada");
+              //console.log("Operación no implementada");
            }
         }
     }
@@ -556,7 +589,7 @@ var EditarInputText = new Class({
     eslabon_3.SetearSiguienteInstancia(eslabon_4);
     eslabon_4.SetearSiguienteInstancia(eslabon_5);
 
-    var operacion = this.get("operacion"); console.log(operacion);
+    var operacion = this.get("operacion"); //console.log(operacion);
 
     eslabon_1.EjecutarOperacion(operacion, $(this), objeto, event);
 
