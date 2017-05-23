@@ -131,9 +131,9 @@ var TablaAutocomplete = new Class({
 		 var rpta = "<td style='" + estilos + "' title='autocomplete'>";
 
 		if (typeof datos === 'undefined'){
-			rpta = rpta + "<label class='oculto' id='id_sugerencia_"+ randito_id + "'></label><input style='" + estilos + "' type='text' class='mootools' id='valor_sugerencia_" + randito_id  + "' placeholder='' operacion='EscribirAutoCompleteTabla' objeto='" + objeto + "' objeto_autocomplete='objeto_" + randito_id + "'><ul id='ul_sugerencia_" + randito_id + "' class='oculto sugerencia-contenedor'></ul>";
+			rpta = rpta + "<label class='oculto' id='id_sugerencia_"+ randito_id + "'></label><input style='" + estilos + "' type='text' class='mootools' id='valor_sugerencia_" + randito_id  + "' placeholder='' operacion='EscribirAutoCompleteTabla' objeto='" + objeto + "' objeto_autocomplete='objeto_" + randito_id + "'><div style='position:relative;'><ul id='ul_sugerencia_" + randito_id + "' class='oculto sugerencia-contenedor'></ul></div>";
 		}else{
-			rpta = rpta + "<label class='oculto' id='id_sugerencia_"+ randito_id + "'>" + datos.llave + "</label><input style='" + estilos + "' type='text' class='mootools' id='valor_sugerencia_" + randito_id  + "' placeholder='' operacion='EscribirAutoCompleteTabla' objeto='" + objeto + "' objeto_autocomplete='objeto_" + randito_id + "' value='" + datos.valor + "'><ul id='ul_sugerencia_" + randito_id + "' class='oculto sugerencia-contenedor'></ul>";
+			rpta = rpta + "<label class='oculto' id='id_sugerencia_"+ randito_id + "'>" + datos.llave + "</label><input style='" + estilos + "' type='text' class='mootools' id='valor_sugerencia_" + randito_id  + "' placeholder='' operacion='EscribirAutoCompleteTabla' objeto='" + objeto + "' objeto_autocomplete='objeto_" + randito_id + "' value='" + datos.valor + "'><div style='position:relative;'><ul id='ul_sugerencia_" + randito_id + "' class='oculto sugerencia-contenedor'></ul></div>";
 		}
 
 		this.html = rpta + "</td>";
