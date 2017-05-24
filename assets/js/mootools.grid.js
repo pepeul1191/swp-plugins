@@ -66,6 +66,7 @@ var Grid = new Class({
 
         for( var i = 0; i < dao_rpta.length; i++){
             this.html_gird = this.html_gird + "<tr>";
+            var id_fila = 0;
            for( var k = 0; k < array_json_td.length; k++){
                 var index_td = array_json_td[k].index;
                 var tipo_form = array_json_td[k].tipo;
@@ -95,6 +96,7 @@ var Grid = new Class({
                         var label_id = new LabelId();
                         var estilos = array_json_td[k].estilos;
                         var valor = dao_rpta[i][index_td];
+                        id_fila = valor;
 
                         label_id.Crear(estilos, valor, index_td);//console.log(label.GetHtml());
                         this.html_gird = this.html_gird + label_id.GetHtml();
@@ -106,6 +108,7 @@ var Grid = new Class({
                         //console.log(dao_rpta[i][index_td]);
                         var valor = dao_rpta[i][index_td];
                         valor = valor["$oid"];
+                        id_fila = valor;
                         //console.log(valor);
                         label_id_mongo.Crear(estilos, valor, index_td);//console.log(label.GetHtml());
                         this.html_gird = this.html_gird + label_id_mongo.GetHtml();
@@ -114,7 +117,7 @@ var Grid = new Class({
                         var botones_fila = new BotonesFila();
                         var estilos = array_json_td[k].estilos;
 
-                        botones_fila.Crear(array_json_btn_td, estilos, this.objeto); //console.log(botones_fila.GetHtml());
+                        botones_fila.Crear(array_json_btn_td, estilos, this.objeto, id_fila); //console.log(botones_fila.GetHtml());
                         this.html_gird = this.html_gird + botones_fila.GetHtml();
                         break;
                     case "checkbox":

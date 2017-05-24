@@ -124,13 +124,19 @@ var Select = new Class({
 
 var BotonesFila = new Class({
 	Interfaces: [ IForm ],
-	Crear: function(array_json_btn_td, estilos, objeto){
+	Crear: function(array_json_btn_td, estilos, objeto, id_fila){
 		var botones_html = "<td title = 'botonesTd' style='"+ array_json_btn_td[0].estilos + "'>" ;
 
 		for( var i = 0; i < array_json_btn_td.length; i++){
 			//console.log(array_json_btn_td[i]);
-			var boton = "<b operacion = '" + array_json_btn_td[i].operacion + "' objeto='" + objeto +"' class='mootools'><a title = '" + array_json_btn_td[i].alt + "' class = 'boton-tabla-td ' href = '" + array_json_btn_td[i].url + "' ><i class='" + array_json_btn_td[i].clase + "'></i></a></b>";
-			botones_html = botones_html + boton;
+			if (typeof array_json_btn_td[i].href === 'undefined'){
+				var boton = "<b operacion = '" + array_json_btn_td[i].operacion + "' objeto='" + objeto +"' class='mootools'><a title = '" + array_json_btn_td[i].alt + "' class = 'boton-tabla-td ' href = '" + array_json_btn_td[i].url + "' ><i class='" + array_json_btn_td[i].clase + "'></i></a></b>";
+				botones_html = botones_html + boton;
+			}else{
+				var boton_href = "<a title = '" + array_json_btn_td[i].alt + "' class = 'boton-tabla-td ' href = '" + array_json_btn_td[i].link + id_fila + "' ><i class='" + array_json_btn_td[i].clase + "'></i></a>";
+				//console.log(array_json_btn_td[i]);
+				botones_html = botones_html + boton_href;
+			}
 		}
 
 		this.html = botones_html + "</td>";
