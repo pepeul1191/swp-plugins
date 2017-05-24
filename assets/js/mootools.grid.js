@@ -179,9 +179,15 @@ var Grid = new Class({
 
         for( var i = 0; i < array_json_btn.length; i++){
             //tipo: "agrega_fila", operacion:"AgregarFila", icono: "fa fa-plus", label: "Agregar Registro"
-            var boton = new Button();
-            boton.Crear(array_json_btn[i].label, array_json_btn[i].icono, array_json_btn[i].operacion, array_json_btn[i].clase, this.objeto);
-            this.html_gird = this.html_gird + boton.GetHtml();
+            if(array_json_btn[i].tipo == "agrega_fila_link"){
+                var boton = new ButtonHRef();
+                boton.Crear(array_json_btn[i].label, array_json_btn[i].icono, array_json_btn[i].operacion, array_json_btn[i].clase, this.objeto, array_json_btn[i].link);
+                this.html_gird = this.html_gird + boton.GetHtml();
+            }else{
+                var boton = new Button();
+                boton.Crear(array_json_btn[i].label, array_json_btn[i].icono, array_json_btn[i].operacion, array_json_btn[i].clase, this.objeto);
+                this.html_gird = this.html_gird + boton.GetHtml();
+            }
         }
 
         this.html_gird = this.html_gird + "</td></tr></tfoot>";

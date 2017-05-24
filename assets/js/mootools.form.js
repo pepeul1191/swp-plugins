@@ -86,6 +86,22 @@ var Button = new Class({
 	}
 });
 
+var ButtonHRef = new Class({
+	Interfaces: [ IForm ],
+	//Button(array_json_btn[i].label, array_json_btn[i].icono, array_json_btn[i].operacion);
+	Crear: function(label, icono, operacion, clase, objeto, link){
+		if(typeof label === 'undefined'){valor = ' ';}
+       if(typeof icono === 'undefined'){clase= ' ';}
+       if(typeof operacion === 'undefined'){clase= ' ';}
+       if(typeof clase === 'undefined'){clase= ' ';}
+       this.html = "<a href='" + link + "' class= 'btn " + clase + "' objeto='" + objeto + "'> <i class='" +icono + "' style='margin-right:5px' ></i>" + label + "</a>";
+       //var boton = "<b title='Agregar Registro' class='btn-small boton-tabla mootools' href='#' style='margin-left:10px;' operacion=" + operacion + "><i class='fa fa-plus' style='margin-right: 5px;'></i>Agregar Registro</b>";
+	},
+	GetHtml: function(){
+		return this.html;
+	}
+});
+
 var Select = new Class({
 	Interfaces: [ IForm ],
 	//Button(array_json_btn[i].label, array_json_btn[i].icono, array_json_btn[i].operacion);
