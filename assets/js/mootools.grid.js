@@ -39,7 +39,7 @@ var Grid = new Class({
     },
     SetTableBody: function(array_json_td, array_json_btn_td, ajax_dao) {
         //console.log(array_json_td); //console.log(array_json_btn_td); //console.log(ajax_dao.GetRespuesta());
-        this.array_json_td = array_json_td; this.array_json_btn = array_json_btn;
+        this.array_json_td = array_json_td; this.array_json_btn = array_json_btn_td;
         this.html_gird = this.html_gird + "<tbody>";
         this.array_json_btn_td = array_json_btn_td;
         var dao_rpta = ajax_dao.GetRespuesta();
