@@ -133,7 +133,7 @@ var BotonesFila = new Class({
 				var boton = "<b operacion = '" + array_json_btn_td[i].operacion + "' objeto='" + objeto +"' class='mootools'><a title = '" + array_json_btn_td[i].alt + "' class = 'boton-tabla-td ' href = '" + array_json_btn_td[i].url + "' ><i class='" + array_json_btn_td[i].clase + "'></i></a></b>";
 				botones_html = botones_html + boton;
 			}else{
-				var boton_href = "<a title = '" + array_json_btn_td[i].alt + "' class = 'boton-tabla-td ' href = '" + array_json_btn_td[i].link + id_fila + "' ><i class='" + array_json_btn_td[i].clase + "'></i></a>";
+				var boton_href = "<a title = '" + array_json_btn_td[i].alt + "' class = 'boton-tabla-td ' href = '" + array_json_btn_td[i].href + id_fila + "' ><i class='" + array_json_btn_td[i].clase + "'></i></a>";
 				//console.log(array_json_btn_td[i]);
 				botones_html = botones_html + boton_href;
 			}
