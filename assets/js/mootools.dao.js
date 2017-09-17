@@ -14,7 +14,10 @@ var AjaxRuby = new Class({
     	 $.ajax({
 			type: ajax_type,
 			url: ajax_url,
-			data: "data=" + ajax_data,
+			data: {
+			    "data":ajax_data,
+			    "csrfmiddlewaretoken":CSRF
+			},
 			async: ajax_async,
 			success:function(data){
 				//data = JSON.parse(data);
