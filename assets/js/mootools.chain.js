@@ -346,7 +346,7 @@ var EditarInputText = new Class({
                $(objeto.id_label_mensaje).addClass("color-warning");
            }else{
                //console.log(array_json_datos_ajax);  //esto es para comprobar el formato a enviar
-               var ajax_tabla = new AjaxRuby();
+               var ajax_tabla = new AjaxPython();
                //console.log(objeto.array_extra_data == null);
                //console.log(objeto);
                if (objeto.array_extra_data == null){
