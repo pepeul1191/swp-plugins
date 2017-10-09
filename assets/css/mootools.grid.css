@@ -23,6 +23,7 @@ b>a>i{color: #484848}
 tfoot>tr>td{padding-top: 5px;}
 table.list td { text-align: left; padding-left: 10px;}
 table.list th { text-align: left; padding-left: 10px;}
+input[type="checkbox"]:hover{cursor: pointer;}
 /*botones*/
 /*
 .boton-tabla{color: #FFFFFF !important;background-color: #72c02c !important;border-color: #72c02c !important; font-size: 12px; border-radius: 0px; padding:5px;}
