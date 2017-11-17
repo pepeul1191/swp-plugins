@@ -55,7 +55,7 @@ var EscribirAutoComplete = new Class({
           var objeto = objetos[0];
         	var valor_escrito = $(objeto.id_sugerencia_valor).val();
 		   $.ajax({
-		       type: "POST",
+		       type: "GET",
 		       //url: parametros['url'] + "?distrito=" + JSON.stringify(data) ,
 		       url: objeto.url + valor_escrito,
 		       data:"",
@@ -150,7 +150,7 @@ var EscribirAutoCompleteTabla = new Class({
           var valor_escrito = $(objeto_autocomplete.id_sugerencia_valor).val();
 
          $.ajax({
-             type: "POST",
+             type: "GET",
              //url: parametros['url'] + "?distrito=" + JSON.stringify(data) ,
              url: objeto_autocomplete.url + valor_escrito,
              data:"",
