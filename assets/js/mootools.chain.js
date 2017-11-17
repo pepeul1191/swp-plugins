@@ -592,7 +592,7 @@ var EditarInputText = new Class({
     var operacion = this.get("operacion"); //console.log(operacion);
 
     eslabon_1.EjecutarOperacion(operacion, $(this), objeto, event);
-
+    return false;
 });
 
 $(document).on("keydown", ".mootools", function(event) {
