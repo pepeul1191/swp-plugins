@@ -576,6 +576,78 @@ var EditarInputText = new Class({
     }
 });
 
+var SeleccionarArchivoFila = new Class({
+    Interfaces: [ IChainOperacion ],
+    SetearSiguienteInstancia: function(instancia){
+        //implementación de IChainOperacion
+        this.siguiente_instancia = instancia;
+    },
+    SiguienteEslabon: function(operacion, thisDOM, objeto, event) {
+        //implementación de IChainOperacion
+        this.siguiente_instancia.EjecutarOperacion(operacion, thisDOM, objeto, event);
+    },
+    EjecutarOperacion: function(operacion, thisDOM, objeto, event) {
+        //implementación de IChainOperacion
+        if(operacion == "SeleccionarArchivoFila"){
+          //console.log("SeleccionarArchivoFila");
+          var inputFile = thisDOM.parent().children().eq(0);
+          inputFile[0].click(function(){
+            //event.preventDefault();
+          });
+           //ObservadorConcreto.NotificarObservadores(objeto.observador, tipo_arreglo, id_fila);
+        }else{
+             try {
+              this.SiguienteEslabon(operacion, thisDOM, objeto, event);
+           }catch(error){
+              //console.log("Operación no implementada");
+           }
+        }
+    }
+});
+
+var SubirArchivoFila = new Class({
+    Interfaces: [ IChainOperacion ],
+    SetearSiguienteInstancia: function(instancia){
+        //implementación de IChainOperacion
+        this.siguiente_instancia = instancia;
+    },
+    SiguienteEslabon: function(operacion, thisDOM, objeto, event) {
+        //implementación de IChainOperacion
+        this.siguiente_instancia.EjecutarOperacion(operacion, thisDOM, objeto, event);
+    },
+    EjecutarOperacion: function(operacion, thisDOM, objeto, event) {
+        //implementación de IChainOperacion
+        if(operacion == "SubirArchivoFila"){
+          console.log("SubirArchivoFila");
+           //ObservadorConcreto.NotificarObservadores(objeto.observador, tipo_arreglo, id_fila);
+          for(var i=0; i < objeto.array_json_btn_td.length; i++){
+            console.log(objeto.array_json_btn_td[i].operacion);
+            if(objeto.array_json_btn_td[i].operacion == "SubirArchivoFila"){
+              console.log();
+              var inputFile = thisDOM.parent().children().eq(0);
+              inputFile.uploadTable(
+                objeto.array_json_btn_td[i].url,
+                objeto.array_json_btn_td[i].validacion, 
+                function(mensaje){
+                    console.log(mensaje);
+                    event.preventDefault();
+                },  
+                inputFile[0],
+                objeto
+              );
+              event.preventDefault();
+            }
+          }
+        }else{
+             try {
+              this.SiguienteEslabon(operacion, thisDOM, objeto, event);
+           }catch(error){
+              //console.log("Operación no implementada");
+           }
+        }
+    }
+});
+
  $(document).on("click", ".mootools", function(event) {
     var objeto = eval(this.get("objeto"));
     var eslabon_1 = new AgregarFila();
@@ -583,11 +655,15 @@ var EditarInputText = new Class({
     var eslabon_3 = new QuitarFila();
     var eslabon_4 = new EditarInputCheck();
     var eslabon_5 = new IrURL();
+    var eslabon_6 = new SeleccionarArchivoFila();
+    var eslabon_7 = new SubirArchivoFila();
 
     eslabon_1.SetearSiguienteInstancia(eslabon_2);
     eslabon_2.SetearSiguienteInstancia(eslabon_3);
     eslabon_3.SetearSiguienteInstancia(eslabon_4);
     eslabon_4.SetearSiguienteInstancia(eslabon_5);
+    eslabon_5.SetearSiguienteInstancia(eslabon_6);
+    eslabon_6.SetearSiguienteInstancia(eslabon_7);
 
     var operacion = this.get("operacion"); //console.log(operacion);
 

@@ -129,10 +129,15 @@ var BotonesFila = new Class({
 
 		for( var i = 0; i < array_json_btn_td.length; i++){
 			//console.log(array_json_btn_td[i]);
-			if (typeof array_json_btn_td[i].href === 'undefined'){
-				var boton = "<b operacion = '" + array_json_btn_td[i].operacion + "' objeto='" + objeto +"' class='mootools'><a title = '" + array_json_btn_td[i].alt + "' class = 'boton-tabla-td ' href = '" + array_json_btn_td[i].url + "' ><i class='" + array_json_btn_td[i].clase + "'></i></a></b>";
+			if(array_json_btn_td[i].operacion == 'SeleccionarArchivoFila'){
+				//alert('SeleccionarArchivoFila');
+       	var temp = "<input type='file' id='" + objeto + "_file_" + id_fila + "' name='myFile' type='file' style='display:none'/>";
+       	var boton = temp + "<b operacion = '" + array_json_btn_td[i].operacion + "' objeto='" + objeto +"' class='mootools'><a title = '" + array_json_btn_td[i].alt + "' class = 'boton-tabla-td ' href = '" + array_json_btn_td[i].url + "' ><i class='" + array_json_btn_td[i].clase + "'></i></a></b>";
 				botones_html = botones_html + boton;
-			}else{
+       }else if(typeof array_json_btn_td[i].href === 'undefined'){
+       		var boton = "<b operacion = '" + array_json_btn_td[i].operacion + "' objeto='" + objeto +"' class='mootools'><a title = '" + array_json_btn_td[i].alt + "' class = 'boton-tabla-td ' href = '" + array_json_btn_td[i].url + "' ><i class='" + array_json_btn_td[i].clase + "'></i></a></b>";
+				botones_html = botones_html + boton;
+       }else{
 				var boton_href = "<a title = '" + array_json_btn_td[i].alt + "' class = 'boton-tabla-td ' href = '" + array_json_btn_td[i].href + id_fila + "' ><i class='" + array_json_btn_td[i].clase + "'></i></a>";
 				//console.log(array_json_btn_td[i]);
 				botones_html = botones_html + boton_href;
