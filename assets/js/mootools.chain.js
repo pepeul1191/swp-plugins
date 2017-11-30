@@ -621,7 +621,7 @@ var SubirArchivoFila = new Class({
           console.log("SubirArchivoFila");
            //ObservadorConcreto.NotificarObservadores(objeto.observador, tipo_arreglo, id_fila);
           for(var i=0; i < objeto.array_json_btn_td.length; i++){
-            console.log(objeto.array_json_btn_td[i].operacion);
+            //console.log(objeto.array_json_btn_td[i].operacion);
             if(objeto.array_json_btn_td[i].operacion == "SubirArchivoFila"){
               var inputFile = thisDOM.parent().children().eq(0);
               var exito = inputFile.uploadTable(
@@ -646,6 +646,57 @@ var SubirArchivoFila = new Class({
     }
 });
 
+
+var VerArchivoTab = new Class({
+    Interfaces: [ IChainOperacion ],
+    SetearSiguienteInstancia: function(instancia){
+        //implementación de IChainOperacion
+        this.siguiente_instancia = instancia;
+    },
+    SiguienteEslabon: function(operacion, thisDOM, objeto, event) {
+        //implementación de IChainOperacion
+        this.siguiente_instancia.EjecutarOperacion(operacion, thisDOM, objeto, event);
+    },
+    EjecutarOperacion: function(operacion, thisDOM, objeto, event) {
+        //implementación de IChainOperacion
+        if(operacion == "VerArchivoTab"){
+          console.log("VerArchivoTab ");
+          //ObservadorConcreto.NotificarObservadores(objeto.observador, tipo_arreglo, id_fila);
+          for(var i=0; i < objeto.array_json_btn_td.length; i++){
+            //console.log(objeto.array_json_btn_td[i].operacion);
+            if(objeto.array_json_btn_td[i].operacion == "VerArchivoTab"){
+              var columna = objeto.array_json_btn_td[i].td_archivo_id;
+              alert("columna : " + columna);
+              var imagen_id = $(thisDOM).parent().parent().children().eq(columna).children().eq(0).html();
+              var url = objeto.array_json_btn_td[i].url + imagen_id;
+              $.ajax({
+                url: url, 
+                type: "GET", 
+                async: false, 
+                success: function(url_archivo) {
+                  var win = window.open(url_archivo, '_blank');
+                  if (win) {
+                      //Browser has allowed it to be opened
+                      win.focus();
+                  } else {
+                      //Browser has blocked it
+                      alert('Please allow popups for this website');
+                  }
+                }
+              });
+              event.preventDefault();
+            }
+          }
+        }else{
+           try {
+            this.SiguienteEslabon(operacion, thisDOM, objeto, event);
+         }catch(error){
+            //console.log("Operación no implementada");
+         }
+        }
+    }
+});
+
  $(document).on("click", ".mootools", function(event) {
     var objeto = eval(this.get("objeto"));
     var eslabon_1 = new AgregarFila();
@@ -655,6 +706,7 @@ var SubirArchivoFila = new Class({
     var eslabon_5 = new IrURL();
     var eslabon_6 = new SeleccionarArchivoFila();
     var eslabon_7 = new SubirArchivoFila();
+    var eslabon_8 = new VerArchivoTab();
 
     eslabon_1.SetearSiguienteInstancia(eslabon_2);
     eslabon_2.SetearSiguienteInstancia(eslabon_3);
@@ -662,6 +714,7 @@ var SubirArchivoFila = new Class({
     eslabon_4.SetearSiguienteInstancia(eslabon_5);
     eslabon_5.SetearSiguienteInstancia(eslabon_6);
     eslabon_6.SetearSiguienteInstancia(eslabon_7);
+    eslabon_7.SetearSiguienteInstancia(eslabon_8);
 
     var operacion = this.get("operacion"); //console.log(operacion);
 
