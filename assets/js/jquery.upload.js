@@ -76,27 +76,21 @@ $.fn.upload = function(remote, data, successFn, progressFn, domClickedSend) {
 //fuente : https://www.youtube.com/watch?v=AZJfXr2LZXg
 
 
-$.fn.uploadTable = function(remote, validacion, progressFn, domClickedSend, objeto) {
+$.fn.uploadTable = function(remote, validacion, td_archivo_id, domClickedSend, objeto, thisDOM) {
 	// if we dont have post validacion, move it along
-	if (typeof validacion != "object") {
-		//progressFn = successFn;
-		successFn = validacion;
-	}
-
 	var formData = new FormData();
 	var valido = true;
-
+	var rpta = false;
 	var numFiles = 0;
 	this.each(function() {
 		var i, length = $(this)[0].files.length;
 		numFiles += length;
 		for (i = 0; i < length; i++) {
 			formData.append($(this)[0].name, $(this)[0].files[i]);
-			console.log($(this)[0].files[i].type);
 			if (validacion.extensiones != '*'){
 				if(!_.contains(validacion.extensiones, $(this)[0].files[i].type)){
 					valido = false;
-					console.log(objeto);
+					//console.log(objeto);
 					$(objeto.id_label_mensaje).html('Archivo seleccionado no es del formato válido');
           $(objeto.id_label_mensaje).removeClass("oculto");
           $(objeto.id_label_mensaje).addClass("color-error");
@@ -147,10 +141,35 @@ $.fn.uploadTable = function(remote, validacion, progressFn, domClickedSend, obje
 					var json;
 					try {
 						json = JSON.parse(res.responseText);
+						if(json.tipo_mensaje == 'success'){
+							$(objeto.id_label_mensaje).html(json.mensaje[0]);
+              $(objeto.id_label_mensaje).removeClass("oculto");
+              $(objeto.id_label_mensaje).addClass("color-success");
+							$(domClickedSend).parent().parent().children().eq(td_archivo_id).children().eq(0).html(json.mensaje[1]);
+						}else{
+							$(objeto.id_label_mensaje).html(json.mensaje[0]);
+              $(objeto.id_label_mensaje).removeClass("oculto");
+              $(objeto.id_label_mensaje).addClass("color-error");
+						}
+						rpta = true;
+						var id_fila = thisDOM.parent().parent().children(0).children(0).html();
+            var id_tabla =  thisDOM.parent().parent().parent().parent().attr("id");
+            //console.log(id_tabla);console.log(id_fila);console.log(id_fila.indexOf(id_tabla));
+            if(id_fila.indexOf(id_tabla) > -1){
+                //console.log("es una fila nueva");
+                var tipo_arreglo = "nuevo";
+            }else{
+                //console.log("es una fila editada");
+                var tipo_arreglo = "editado";
+            }
+
+            ObservadorConcreto.NotificarObservadores(objeto.observador, tipo_arreglo, id_fila);
 					} catch(e) {
 						json = res.responseText;
+						$(objeto.id_label_mensaje).html(res.responseText);
+            $(objeto.id_label_mensaje).removeClass("oculto");
+            $(objeto.id_label_mensaje).addClass("color-error");
 					}
-					if (typeof successFn === "function") successFn(json);
 					//domClickedSend.prop( "disabled", false );
 					def.resolve(json);
 				}
@@ -159,6 +178,6 @@ $.fn.uploadTable = function(remote, validacion, progressFn, domClickedSend, obje
 			def.reject();
 		}
 
-		return def.promise();
+		return rpta;
 	}
 };

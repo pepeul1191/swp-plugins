@@ -623,18 +623,16 @@ var SubirArchivoFila = new Class({
           for(var i=0; i < objeto.array_json_btn_td.length; i++){
             console.log(objeto.array_json_btn_td[i].operacion);
             if(objeto.array_json_btn_td[i].operacion == "SubirArchivoFila"){
-              console.log();
               var inputFile = thisDOM.parent().children().eq(0);
-              inputFile.uploadTable(
+              var exito = inputFile.uploadTable(
                 objeto.array_json_btn_td[i].url,
                 objeto.array_json_btn_td[i].validacion, 
-                function(mensaje){
-                    console.log(mensaje);
-                    event.preventDefault();
-                },  
+                objeto.array_json_btn_td[i].td_archivo_id,  
                 inputFile[0],
-                objeto
+                objeto,
+                thisDOM
               );
+              console.log(exito);  
               event.preventDefault();
             }
           }
