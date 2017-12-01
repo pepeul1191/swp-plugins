@@ -660,13 +660,13 @@ var VerArchivoTab = new Class({
     EjecutarOperacion: function(operacion, thisDOM, objeto, event) {
         //implementación de IChainOperacion
         if(operacion == "VerArchivoTab"){
-          console.log("VerArchivoTab ");
+          //console.log("VerArchivoTab ");
           //ObservadorConcreto.NotificarObservadores(objeto.observador, tipo_arreglo, id_fila);
           for(var i=0; i < objeto.array_json_btn_td.length; i++){
             //console.log(objeto.array_json_btn_td[i].operacion);
             if(objeto.array_json_btn_td[i].operacion == "VerArchivoTab"){
               var columna = objeto.array_json_btn_td[i].td_archivo_id;
-              alert("columna : " + columna);
+              //alert("columna : " + columna);
               var imagen_id = $(thisDOM).parent().parent().children().eq(columna).children().eq(0).html();
               var url = objeto.array_json_btn_td[i].url + imagen_id;
               $.ajax({
