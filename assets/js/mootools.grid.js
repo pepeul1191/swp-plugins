@@ -139,7 +139,8 @@ var Grid = new Class({
                     case "select":
                         var select = new Select();
                         var estilos = array_json_td[k].estilos;
-                        var options = JSON.parse(array_json_td[k].options.ajax_rpta_data);
+                        //var options = JSON.parse(array_json_td[k].options.ajax_rpta_data);
+                        var options = array_json_td[k].options.ajax_rpta_data;
                         var valor = dao_rpta[i][index_td];
 
                         select.Crear(estilos, options, valor, this.objeto); //console.log(botones_fila.GetHtml());
