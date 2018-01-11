@@ -722,7 +722,7 @@ $(document).on("click", ".mootools", function(event) {
    var operacion = this.get("operacion"); //console.log(operacion);
 
    eslabon_1.EjecutarOperacion(operacion, $(this), objeto, event);
-   return false;
+   //return false;
 });
 
 $(document).on("keydown", ".mootools", function(event) {
