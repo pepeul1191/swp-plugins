@@ -165,6 +165,7 @@ var QuitarFila = new Class({
            fila.remove();
            ObservadorConcreto.NotificarObservadores(objeto.observador, tipo_arreglo, id_fila);
            console.log("paso!!!");
+          event.preventDefault();
        }else{
             try {
              this.SiguienteEslabon(operacion, thisDOM, objeto, event);
