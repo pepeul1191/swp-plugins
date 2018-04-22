@@ -599,6 +599,7 @@ var SeleccionarArchivoFila = new Class({
            //event.preventDefault();
          });
           //ObservadorConcreto.NotificarObservadores(objeto.observador, tipo_arreglo, id_fila);
+          event.preventDefault();
        }else{
             try {
              this.SiguienteEslabon(operacion, thisDOM, objeto, event);
